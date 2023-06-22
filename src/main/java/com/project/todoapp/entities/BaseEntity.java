@@ -24,5 +24,8 @@ public abstract class BaseEntity {
     @CreationTimestamp
     private LocalDateTime createdAt;
 
+    @Column(name = "updateTime")
+    private LocalDateTime updatedAt;
+
 
 }

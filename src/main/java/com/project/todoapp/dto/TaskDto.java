@@ -1,6 +1,5 @@
 package com.project.todoapp.dto;
 
-import com.project.todoapp.entities.User;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

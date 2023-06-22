@@ -1,18 +1,19 @@
 package com.project.todoapp.services;
 
-import com.project.todoapp.entities.User;
+import com.project.todoapp.dto.UserDto;
 
 import java.util.List;
 
+
 public interface UserService {
 
-    List<User> getAllUsers();
+    List<UserDto> getAllUsers();
 
-    User createNewUser(Long userId);
+    UserDto createNewUser(UserDto newUser);
 
-    User getOneUser(Long userId);
+    UserDto getOneUser(Long userId);
 
-    User updateOneUser(Long userId, User newUser);
+    UserDto updateOneUser(Long userId, UserDto newUser);
 
     Boolean deleteById(Long userId);
 

@@ -1,21 +1,24 @@
 package com.project.todoapp.services;
 
+import com.project.todoapp.dto.TaskDto;
 import com.project.todoapp.entities.Task;
 
 import java.util.List;
+import java.util.Optional;
+
 
 public interface TaskService {
-    List<Task> getAllTasks();
+    List<TaskDto> getAllTasks(Optional<Long> userId);
 
-    Task createNewTask(Long taskId);
+    TaskDto createNewTask(TaskDto newTaskDto);
  
-    List<Task> getCompletedTasks();
+    List<TaskDto> getCompletedTasks(Optional<Long> userId);
 
-    Task getOneTask(Long taskId);
+    TaskDto getOneTask(Long taskId);
 
-    Task updateOneTask(Long taskId, Task newTask);
+    TaskDto updateOneTask(Long taskId, TaskDto newTask);
 
-    Task completeTask(Long taskId);
+    TaskDto completeTask(Long taskId);
 
     Boolean deleteById(Long taskId);
 }
