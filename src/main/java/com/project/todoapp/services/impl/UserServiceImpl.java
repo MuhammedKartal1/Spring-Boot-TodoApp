@@ -26,8 +26,8 @@ public class UserServiceImpl implements UserService {
     public List<UserDto> getAllUsers() {
 
         List<User> users = userRepository.findAll();
-        List<UserDto> userDtos  = users.stream().map(user -> modelMapper.map(user,UserDto.class)).collect(Collectors.toList());
-        return userDtos;
+        return users.stream().map(user -> modelMapper.map(user,UserDto.class)).collect(Collectors.toList());
+
     }
 
     @Override
@@ -56,6 +56,8 @@ public class UserServiceImpl implements UserService {
 
 
         if(user.isPresent()) {
+            user.get().setUsername(newUser.getUsername());
+            user.get().setPassword(newUser.getPassword());
             user.get().setUpdatedAt(LocalDateTime.now());
             return modelMapper.map(userRepository.save(user.get()), UserDto.class);
         }
