@@ -12,16 +12,16 @@ import org.hibernate.annotations.OnDeleteAction;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "task")
+@Table(name = "tasks")
 public class Task extends BaseEntity{
 
-    @Column(name = "Title")
+    @Column(name = "title")
     private String title;
 
-    @Column(name = "Description")
+    @Column(name = "description")
     private String description;
 
-    @Column(name = "Completed")
+    @Column(name = "completed")
     private Boolean completed;
 
     @ManyToOne(fetch = FetchType.LAZY)

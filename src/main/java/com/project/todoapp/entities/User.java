@@ -11,12 +11,12 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class User extends BaseEntity {
 
-    @Column(name = "Username")
+    @Column(name = "user_name")
     private String username;
-    @Column(name = "Password")
+    @Column(name = "password")
     private String password;
 
 

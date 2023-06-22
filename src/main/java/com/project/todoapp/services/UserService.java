@@ -1,6 +1,7 @@
 package com.project.todoapp.services;
 
 import com.project.todoapp.dto.UserDto;
+import com.project.todoapp.entities.User;
 
 import java.util.List;
 
@@ -18,4 +19,5 @@ public interface UserService {
     Boolean deleteById(Long userId);
 
 
+    User getOneUserByName(String username);
 }

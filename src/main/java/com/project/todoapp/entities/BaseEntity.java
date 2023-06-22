@@ -9,23 +9,23 @@ import org.hibernate.annotations.CreationTimestamp;
 import java.time.LocalDateTime;
 @EqualsAndHashCode
 @Data
-@SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
+@SuperBuilder
 @MappedSuperclass
 public abstract class BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
+    @Column(name = "id")
     private Long id;
 
-    @Column(name = "Creation Time")
+    @Column(name = "creation_time")
     @CreationTimestamp
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
 
-    @Column(name = "updateTime")
-    private LocalDateTime updatedAt;
+    @Column(name = "update_time")
+    private LocalDateTime updatedAt = LocalDateTime.now();
 
 
 }

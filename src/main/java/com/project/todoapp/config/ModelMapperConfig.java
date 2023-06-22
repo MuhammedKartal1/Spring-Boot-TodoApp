@@ -1,4 +1,4 @@
-package com.project.todoapp.ModelMapperConfig;
+package com.project.todoapp.config;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;

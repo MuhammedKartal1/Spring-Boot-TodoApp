@@ -1,7 +1,6 @@
 package com.project.todoapp.controllers;
 
 import com.project.todoapp.dto.TaskDto;
-import com.project.todoapp.entities.Task;
 import com.project.todoapp.services.TaskService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

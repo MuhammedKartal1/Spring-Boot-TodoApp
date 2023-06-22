@@ -43,7 +43,6 @@ public class TaskServiceImpl implements TaskService {
     public TaskDto createNewTask(TaskDto newTaskDto) {
 
         Task task = modelMapper.map(newTaskDto, Task.class);
-        task.setCreatedAt(LocalDateTime.now());
         return modelMapper.map(taskRepository.save(task), TaskDto.class);
 
     }
