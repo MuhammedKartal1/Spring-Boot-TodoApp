@@ -36,22 +36,6 @@ public class JwtUserDetails implements UserDetails {
 
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
-    }
-
-
-    @Override
-    public String getPassword() {
-        return null;
-    }
-
-    @Override
-    public String getUsername() {
-        return null;
-    }
-
-    @Override
     public boolean isAccountNonExpired() {
         return true;
     }
@@ -70,4 +54,6 @@ public class JwtUserDetails implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+
 }

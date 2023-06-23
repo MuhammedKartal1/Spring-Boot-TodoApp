@@ -3,7 +3,7 @@ package com.project.todoapp.controllers;
 import com.project.todoapp.dto.UserDto;
 import com.project.todoapp.security.JwtTokenProvider;
 import com.project.todoapp.services.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -21,16 +21,18 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
 
-    private AuthenticationManager authenticationManager;
+    final AuthenticationManager authenticationManager;
 
 
-    private JwtTokenProvider jwtTokenProvider;
+    final JwtTokenProvider jwtTokenProvider;
 
 
-    private UserService userService;
+    final UserService userService;
+
+    final PasswordEncoder passwordEncoder;
 
 
-    private PasswordEncoder passwordEncoder;
+   // private PasswordEncoder passwordEncoder;
 
     public AuthController(AuthenticationManager authenticationManager, UserService userService,
                           PasswordEncoder passwordEncoder, JwtTokenProvider jwtTokenProvider) {
@@ -45,17 +47,26 @@ public class AuthController {
 
     @PostMapping("/login")
     public String login(@RequestBody UserDto userDto){
-        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken( userDto.getUsername(),  passwordEncoder.encode(userDto.getPassword()));
-        System.out.println(passwordEncoder.encode(userDto.getPassword().toString()));
+
+        String password = userDto.getPassword();
+        String username = userDto.getUsername();
+
+        if (password == null || password.isEmpty() ) {
+            throw new IllegalArgumentException("Şifre boş olamaz.");
+        }
+
+        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken( username, password);
         Authentication auth = authenticationManager.authenticate(authToken);
         SecurityContextHolder.getContext().setAuthentication(auth);
         String jwtToken = jwtTokenProvider.generateJwtToken(auth);
+
         return "Bearer " + jwtToken;
     }
 
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody UserDto userDto){
-        if(userService.getOneUserByName(userDto.getUsername()) != null )
+
+        if(userService.getOneUserByName( userDto.getUsername()) != null )
             return new ResponseEntity<>("Username is already in use", HttpStatus.BAD_REQUEST);
 
         userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));

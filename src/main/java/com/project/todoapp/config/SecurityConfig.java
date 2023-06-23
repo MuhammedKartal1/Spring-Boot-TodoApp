@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 
 
-import org.springframework.security.authentication.AuthenticationProvider;
+
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -27,13 +27,17 @@ import com.project.todoapp.services.impl.UserDetailsServiceImpl;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-public class SecurityConfig {
+public class SecurityConfig{
 
-    final UserDetailsServiceImpl userDetailsService;
 
-    final JwtAuthenticationEntryPoint handler;
+    private UserDetailsServiceImpl userDetailsService;
 
-    //final AuthenticationProvider authenticationProvider;
+    private JwtAuthenticationEntryPoint handler;
+
+    public SecurityConfig(UserDetailsServiceImpl userDetailsService, JwtAuthenticationEntryPoint handler) {
+        this.userDetailsService = userDetailsService;
+        this.handler = handler;
+    }
 
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter() {
@@ -71,28 +75,18 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-                .cors()
-                .and()
                 .csrf().disable()
-                .authorizeHttpRequests().requestMatchers("/")
+                .authorizeHttpRequests().requestMatchers("/auth/**")
                 .permitAll()
-                .anyRequest().permitAll()
+                .anyRequest().authenticated()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .exceptionHandling().authenticationEntryPoint(handler);//.and()
-               // .authenticationProvider(authenticationProvider);
-                /*.authorizeHttpRequests().requestMatchers(HttpMethod.GET, "/l").permitAll()
-                .requestMatchers(HttpMethod.GET, "/auth/**").permitAll();*/
-
-
-        /*
-
-
-        */
+                .exceptionHandling().authenticationEntryPoint(handler);
 
 
         httpSecurity.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
         return httpSecurity.build();
     }
+
 }
