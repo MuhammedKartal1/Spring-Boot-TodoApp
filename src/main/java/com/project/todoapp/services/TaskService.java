@@ -1,7 +1,7 @@
 package com.project.todoapp.services;
 
 import com.project.todoapp.dto.TaskDto;
-import com.project.todoapp.entities.Task;
+
 
 import java.util.List;
 import java.util.Optional;

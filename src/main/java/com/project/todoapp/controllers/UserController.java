@@ -2,13 +2,11 @@ package com.project.todoapp.controllers;
 
 
 import com.project.todoapp.dto.UserDto;
-import com.project.todoapp.entities.User;
 import com.project.todoapp.services.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
@@ -23,17 +21,17 @@ public class UserController {
 
     /**
      * Tüm kullanıcıların bilgilerini getirmek için
-     * @return
+     * @return response entity
      */
     @GetMapping
-    public ResponseEntity<List<UserDto>> getAllUsers(){
-        return ResponseEntity.ok(userService.getAllUsers());
+    public List<UserDto> getAllUsers(){
+        return userService.getAllUsers();
     }
 
     /**
      * Id'si verilen kuıllanıcıların bilgilerini ketirmek için
-     * @param userId
-     * @return
+     * @param userId id
+     * @return response entity
      */
     @GetMapping("/{userId}")
     public ResponseEntity<UserDto> getOneUser(@PathVariable Long userId){
@@ -45,8 +43,8 @@ public class UserController {
 
     /**
      * Yeni kullanıcı eklemek için
-     * @param newUser
-     * @return
+     * @param newUser userDto
+     * @return response entity
      */
     @PostMapping
     public ResponseEntity<UserDto> createUser(@RequestBody UserDto newUser){
@@ -56,9 +54,9 @@ public class UserController {
 
     /**
      * Id'si verilen kullanıcıyı güncellemek için
-     * @param userId
-     * @param newUser
-     * @return
+     * @param userId id
+     * @param newUser userDto
+     * @return response entity
      */
     @PutMapping("/{userId}")
     public ResponseEntity<UserDto> updateOneUser(@PathVariable Long userId, @RequestBody UserDto newUser){
@@ -67,15 +65,13 @@ public class UserController {
 
     /**
      * Id'si verilen bir kullanıcıyı silmek için
-     * @param userId
-     * @return
+     * @param userId id
+     * @return response entity
      */
     @DeleteMapping("{userId}")
     public ResponseEntity<Boolean>deleteOneUser(@PathVariable Long userId){
         Boolean status = userService.deleteById(userId);
-        return ResponseEntity.ok(userService.deleteById(userId));
+        return ResponseEntity.ok(status);
     }
-
-
 
 }

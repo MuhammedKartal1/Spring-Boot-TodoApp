@@ -20,38 +20,38 @@ public class TaskController {
 
     /**
      * Bir kullanıcıya ait tüm görevleri listelemek için
-     * @param userId
-     * @return
+     * @param userId id
+     * @return response entity
      */
     @GetMapping
-    public ResponseEntity<List<TaskDto>> getAllTasks(@RequestParam Optional<Long> userId){
-        return ResponseEntity.ok(taskService.getAllTasks(userId));
+    public ResponseEntity<List<TaskDto>> getAllTasks(@RequestParam(value = "userId", required = false) Long userId){
+        return ResponseEntity.ok(taskService.getAllTasks(Optional.ofNullable(userId)));
     }
 
     /**
      * Tamamlanan görevleri listelemek için
-     * @param userId
-     * @return
+     * @param userId id
+     * @return response entity
      */
     @GetMapping("/completed")
-    public ResponseEntity<List<TaskDto>> getCompletedTasks(@RequestParam Optional<Long> userId){
-        return ResponseEntity.ok(taskService.getCompletedTasks(userId));
+    public ResponseEntity<List<TaskDto>> getCompletedTasks(@RequestParam(value = "userId", required = false) Long userId){
+        return ResponseEntity.ok(taskService.getCompletedTasks(Optional.ofNullable(userId)));
     }
 
     /**
      * Belirli bir görevin detaylarını getirmek için
-     * @param taskId
-     * @return
+     * @param taskId id
+     * @return response entity
      */
     @GetMapping("/{taskId}")
-    public ResponseEntity<TaskDto> getOneTaskById(@RequestParam Long taskId){
+    public ResponseEntity<TaskDto> getOneTaskById(@PathVariable Long taskId){
         return ResponseEntity.ok(taskService.getOneTask(taskId));
     }
 
     /**
      * Yeni görev oluşturmak için
-     * @param newTaskDto
-     * @return
+     * @param newTaskDto TaskDto
+     * @return response entity
      */
     @PostMapping
     public ResponseEntity<TaskDto> createTask(@RequestBody TaskDto newTaskDto){
@@ -60,9 +60,9 @@ public class TaskController {
 
     /**
      *Belirli bir görevi güncellemek için
-     * @param taskId
-     * @param newTaskDto
-     * @return
+     * @param taskId id
+     * @param newTaskDto TaskDto
+     * @return response entity
      */
     @PutMapping("/{taskId}")
     public ResponseEntity<TaskDto> updateOneTask(@RequestParam Long taskId, @RequestBody TaskDto newTaskDto){
@@ -71,8 +71,8 @@ public class TaskController {
 
     /**
      * Belirli bir görevi tamamladığını işaretlemek için
-     * @param taskId
-     * @return
+     * @param taskId id
+     * @return response entity
      */
     @PutMapping("/{taskId}/complete")
     public ResponseEntity<TaskDto> completeTask(@PathVariable Long taskId){
@@ -81,8 +81,8 @@ public class TaskController {
 
     /**
      * Belirli bir görevi silmek için
-     * @param taskId
-     * @return
+     * @param taskId id
+     * @return response entity
      */
     @DeleteMapping("/{taskId}")
     public ResponseEntity<Boolean> deleteOneTask(@PathVariable Long taskId){

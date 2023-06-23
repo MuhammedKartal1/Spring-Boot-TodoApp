@@ -4,6 +4,7 @@ import com.project.todoapp.dto.UserDto;
 import com.project.todoapp.entities.User;
 
 import java.util.List;
+import java.util.Optional;
 
 
 public interface UserService {
@@ -20,4 +21,6 @@ public interface UserService {
 
 
     User getOneUserByName(String username);
+
+    Optional<User> getOneUserById (Long userId);
 }

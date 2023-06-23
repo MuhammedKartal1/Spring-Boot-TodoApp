@@ -23,16 +23,12 @@ public class AuthController {
 
     final AuthenticationManager authenticationManager;
 
-
     final JwtTokenProvider jwtTokenProvider;
-
 
     final UserService userService;
 
     final PasswordEncoder passwordEncoder;
 
-
-   // private PasswordEncoder passwordEncoder;
 
     public AuthController(AuthenticationManager authenticationManager, UserService userService,
                           PasswordEncoder passwordEncoder, JwtTokenProvider jwtTokenProvider) {
@@ -74,8 +70,5 @@ public class AuthController {
         return new ResponseEntity<>("User successfully registered", HttpStatus.CREATED);
 
     }
-
-
-
 
 }

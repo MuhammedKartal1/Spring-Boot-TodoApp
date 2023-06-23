@@ -1,17 +1,19 @@
 package com.project.todoapp.services.impl;
 
+
 import com.project.todoapp.dto.UserDto;
+
 import com.project.todoapp.entities.User;
 import com.project.todoapp.repositories.UserRepository;
 import com.project.todoapp.services.UserService;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
+
 
 @Service
 @RequiredArgsConstructor
@@ -19,23 +21,34 @@ public class UserServiceImpl implements UserService {
 
     final UserRepository userRepository;
 
-    final ModelMapper modelMapper;
-
+    private UserDto converter(User user){
+        UserDto userDto = new UserDto();
+        userDto.setUsername(user.getUsername());
+        userDto.setPassword(user.getPassword());
+        return userDto;
+    }
 
     @Override
     public List<UserDto> getAllUsers() {
 
         List<User> users = userRepository.findAll();
-        return users.stream().map(user -> modelMapper.map(user,UserDto.class)).collect(Collectors.toList());
-
+        List<UserDto> userDtos = new ArrayList<>();
+        for (User user : users) {
+            userDtos.add(converter(user));
+        }
+        return userDtos;
     }
 
     @Override
     public UserDto createNewUser(UserDto newUserDto) {
 
-        User user = modelMapper.map(newUserDto, User.class);
+        User user = new User();
+        user.setUsername(newUserDto.getUsername());
+        user.setPassword(newUserDto.getPassword());
         user.setCreatedAt(LocalDateTime.now());
-        return modelMapper.map(userRepository.save(user), UserDto.class);
+        userRepository.save(user);
+
+        return converter(user);
     }
 
     @Override
@@ -43,10 +56,8 @@ public class UserServiceImpl implements UserService {
 
         Optional<User> user = userRepository.findById(userId);
 
-        if(user.isPresent())
-         return modelMapper.map(user, UserDto.class);
+        return user.map(this::converter).orElse(null);
 
-        return null;
     }
 
     @Override
@@ -59,7 +70,10 @@ public class UserServiceImpl implements UserService {
             user.get().setUsername(newUser.getUsername());
             user.get().setPassword(newUser.getPassword());
             user.get().setUpdatedAt(LocalDateTime.now());
-            return modelMapper.map(userRepository.save(user.get()), UserDto.class);
+            user.get().setUsername(newUser.getUsername());
+            user.get().setPassword(newUser.getPassword());
+            userRepository.save(user.get());
+            return newUser;
         }
 
         return null;
@@ -74,11 +88,16 @@ public class UserServiceImpl implements UserService {
             return true;
         }
         return false;
-
     }
+
 
     @Override
     public User getOneUserByName(String username) {
         return userRepository.findByUsername(username);
+    }
+
+    @Override
+    public Optional<User> getOneUserById(Long userId) {
+        return userRepository.findById(userId);
     }
 }
