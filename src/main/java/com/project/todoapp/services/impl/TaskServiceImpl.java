@@ -106,6 +106,8 @@ public class TaskServiceImpl implements TaskService {
             task.get().setDescription(newTask.getDescription());
             task.get().setUpdatedAt(LocalDateTime.now());
 
+            taskRepository.save(task.get());
+
             return converter(task.get());
         }
         return null;

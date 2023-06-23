@@ -1,4 +1,4 @@
-package com.project.todoapp.resollver;
+package com.project.todoapp.graphql.resollver;
 
 import com.coxautodev.graphql.tools.GraphQLMutationResolver;
 import com.coxautodev.graphql.tools.GraphQLQueryResolver;

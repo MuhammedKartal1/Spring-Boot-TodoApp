@@ -65,7 +65,7 @@ public class TaskController {
      * @return response entity
      */
     @PutMapping("/{taskId}")
-    public ResponseEntity<TaskDto> updateOneTask(@RequestParam Long taskId, @RequestBody TaskDto newTaskDto){
+    public ResponseEntity<TaskDto> updateOneTask(@PathVariable Long taskId, @RequestBody TaskDto newTaskDto){
         return ResponseEntity.ok(taskService.updateOneTask(taskId,newTaskDto));
     }
 
